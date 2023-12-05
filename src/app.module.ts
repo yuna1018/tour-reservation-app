@@ -6,7 +6,11 @@ import { TypeormConfigModule } from './infrastructure/database/typeorm-config.mo
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'development' ? '.env' : '.test.env',
+      isGlobal: true,
+    }),
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
